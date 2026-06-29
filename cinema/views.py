@@ -1,28 +1,28 @@
 from django.db.models import Count, F
+
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import IsAuthenticated
 
 from cinema.models import (
-    Genre,
     Actor,
     CinemaHall,
+    Genre,
     Movie,
     MovieSession,
     Order,
 )
-
 from cinema.serializers import (
-    GenreSerializer,
     ActorSerializer,
     CinemaHallSerializer,
-    MovieSerializer,
-    MovieSessionSerializer,
-    MovieSessionListSerializer,
+    GenreSerializer,
     MovieDetailSerializer,
-    MovieSessionDetailSerializer,
     MovieListSerializer,
-    OrderSerializer,
+    MovieSerializer,
+    MovieSessionDetailSerializer,
+    MovieSessionListSerializer,
+    MovieSessionSerializer,
     OrderListSerializer,
+    OrderSerializer,
 )
 
 
