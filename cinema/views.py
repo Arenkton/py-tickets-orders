@@ -1,6 +1,7 @@
 from django.db.models import Count, F
 
 from rest_framework import mixins, viewsets
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import IsAuthenticated
 
 from cinema.models import (
@@ -28,6 +29,10 @@ from cinema.serializers import (
 
 def _params_to_ints(query_string):
     return [int(str_id) for str_id in query_string.split(",")]
+
+
+class OrderPagination(PageNumberPagination):
+    page_size = 10
 
 
 class GenreViewSet(viewsets.ModelViewSet):
@@ -102,7 +107,7 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
         movie = self.request.query_params.get("movie")
 
         if date:
-            queryset = queryset.filter(show_time=date)
+            queryset = queryset.filter(show_time__date=date)
 
         if movie:
             queryset = queryset.filter(movie_id=movie)
@@ -130,6 +135,7 @@ class OrderViewSet(
     )
     serializer_class = OrderSerializer
     permission_classes = (IsAuthenticated,)
+    pagination_class = OrderPagination
 
     def get_queryset(self):
         return self.queryset.filter(user=self.request.user)
